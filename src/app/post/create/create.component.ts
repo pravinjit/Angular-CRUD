@@ -14,9 +14,11 @@ export class CreateComponent implements OnInit {
   constructor(public postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
+    // localStorage.removeItem('jobs');
     this.form = new FormGroup({
-      title: new FormControl('', [Validators.required]),
-      body: new FormControl('', Validators.required),
+      companyName: new FormControl('', [Validators.required]),
+      jobTitle: new FormControl('', Validators.required),
+      jobDescription: new FormControl('', Validators.required),
     });
   }
 
@@ -25,10 +27,17 @@ export class CreateComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.form.value);
-    this.postService.create(this.form.value).subscribe((res) => {
-      console.log('Post created successfully!');
-      this.router.navigateByUrl('post/index');
-    });
+    let entry = JSON.parse(localStorage.getItem('jobs'))
+      ? JSON.parse(localStorage.getItem('jobs'))
+      : [];
+    entry.push(this.form.value);
+
+    localStorage.setItem('jobs', JSON.stringify(entry));
+    this.router.navigateByUrl('post/index');
+
+    // this.postService.create(this.form.value).subscribe((res) => {
+    //   console.log('Post created successfully!');
+    //   this.router.navigateByUrl('post/index');
+    // });
   }
 }

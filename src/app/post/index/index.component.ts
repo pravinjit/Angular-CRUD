@@ -13,10 +13,22 @@ export class IndexComponent implements OnInit {
   constructor(public postService: PostService) {}
 
   ngOnInit(): void {
-    this.postService.getAll().subscribe((data: Post[]) => {
-      this.posts = data;
-      console.log(this.posts);
-    });
+    // this.postService.getAll().subscribe((data: Post[]) => {
+    //   this.posts = data;
+    //   console.log(this.posts);
+    // });
+    const data = [
+      {
+        userId: 1,
+        id: 1,
+        companyName: '',
+        jobTitle: '',
+        jobDescription: '',
+      },
+    ];
+
+    console.log('pravin--', JSON.parse(localStorage.getItem('jobs')));
+    this.posts = JSON.parse(localStorage.getItem('jobs'));
   }
 
   deletePost(id) {
